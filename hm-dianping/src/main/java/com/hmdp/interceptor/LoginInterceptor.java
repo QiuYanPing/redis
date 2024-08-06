@@ -20,7 +20,7 @@ public class LoginInterceptor implements HandlerInterceptor {
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
         if(UserHolder.getUser() == null){
-            response.setStatus(401);
+            response.setStatus(401); //没有登录，返回状态码401，表示未授权
             return false;
         }
         return true;

@@ -16,7 +16,8 @@ import static com.hmdp.utils.RedisConstants.LOGIN_USER_KEY;
 import static com.hmdp.utils.RedisConstants.LOGIN_USER_TTL;
 
 public class RefreshInterceptor implements HandlerInterceptor {
-    StringRedisTemplate stringRedisTemplate;
+
+    StringRedisTemplate stringRedisTemplate;//不使用注入，是因为该拦截器没有装配到IOC容器中，是自定义的
 
     public RefreshInterceptor(StringRedisTemplate stringRedisTemplate) {
         this.stringRedisTemplate = stringRedisTemplate;
@@ -24,6 +25,7 @@ public class RefreshInterceptor implements HandlerInterceptor {
 
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
+        //校验登录状态
         //1.获取token
         String token = request.getHeader("authorization");
         if(StrUtil.isBlank(token)){
